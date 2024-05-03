@@ -104,7 +104,7 @@ void KvServer::Get(const raftKVRpcProctoc::GetArgs *args, raftKVRpcProctoc::GetR
   }
   auto chForRaftIndex = waitApplyCh[raftIndex];
 
-  m_mtx.unlock();  //直接解锁，等待任务执行完成，不能一直拿锁等待
+  m_mtx.unlock();  // 直接解锁，等待任务执行完成，不能一直拿锁等待
 
   // timeout
   Op raftCommitOp;
@@ -118,8 +118,8 @@ void KvServer::Get(const raftKVRpcProctoc::GetArgs *args, raftKVRpcProctoc::GetR
     m_raftNode->GetState(&_, &isLeader);
 
     if (ifRequestDuplicate(op.ClientId, op.RequestId) && isLeader) {
-      //如果超时，代表raft集群不保证已经commitIndex该日志，但是如果是已经提交过的get请求，是可以再执行的。
-      // 不会违反线性一致性
+      // 如果超时，代表raft集群不保证已经commitIndex该日志，但是如果是已经提交过的get请求，是可以再执行的。
+      //  不会违反线性一致性
       std::string value;
       bool exist = false;
       ExecuteGetOpOnKVDB(op, &value, &exist);
@@ -131,7 +131,7 @@ void KvServer::Get(const raftKVRpcProctoc::GetArgs *args, raftKVRpcProctoc::GetR
         reply->set_value("");
       }
     } else {
-      reply->set_err(ErrWrongLeader);  //返回这个，其实就是让clerk换一个节点重试
+      reply->set_err(ErrWrongLeader);  // 返回这个，其实就是让clerk换一个节点重试
     }
   } else {
     // raft已经提交了该command（op），可以正式开始执行了
@@ -187,10 +187,10 @@ void KvServer::GetCommandFromRaft(ApplyMsg message) {
     }
     //  kv.lastRequestId[op.ClientId] = op.RequestId  在Executexxx函数里面更新的
   }
-  //到这里kvDB已经制作了快照
+  // 到这里kvDB已经制作了快照
   if (m_maxRaftState != -1) {
     IfNeedToSendSnapShotCommand(message.CommandIndex, 9);
-    //如果raft的log太大（大于指定的比例）就把制作快照
+    // 如果raft的log太大（大于指定的比例）就把制作快照
   }
 
   // Send message to the chan of op.ClientId
@@ -241,7 +241,7 @@ void KvServer::PutAppend(const raftKVRpcProctoc::PutAppendArgs *args, raftKVRpcP
   }
   auto chForRaftIndex = waitApplyCh[raftIndex];
 
-  m_mtx.unlock();  //直接解锁，等待任务执行完成，不能一直拿锁等待
+  m_mtx.unlock();  // 直接解锁，等待任务执行完成，不能一直拿锁等待
 
   // timeout
   Op raftCommitOp;
@@ -255,7 +255,7 @@ void KvServer::PutAppend(const raftKVRpcProctoc::PutAppendArgs *args, raftKVRpcP
     if (ifRequestDuplicate(op.ClientId, op.RequestId)) {
       reply->set_err(OK);  // 超时了,但因为是重复的请求，返回ok，实际上就算没有超时，在真正执行的时候也要判断是否重复
     } else {
-      reply->set_err(ErrWrongLeader);  ///这里返回这个的目的让clerk重新尝试
+      reply->set_err(ErrWrongLeader);  /// 这里返回这个的目的让clerk重新尝试
     }
   } else {
     DPrintf(
@@ -263,7 +263,7 @@ void KvServer::PutAppend(const raftKVRpcProctoc::PutAppendArgs *args, raftKVRpcP
         "ClientId %s, RequestId %d, Opreation %s, Key :%s, Value :%s",
         m_me, m_me, raftIndex, &op.ClientId, op.RequestId, &op.Operation, &op.Key, &op.Value);
     if (raftCommitOp.ClientId == op.ClientId && raftCommitOp.RequestId == op.RequestId) {
-      //可能发生leader的变更导致日志被覆盖，因此必须检查
+      // 可能发生leader的变更导致日志被覆盖，因此必须检查
       reply->set_err(OK);
     } else {
       reply->set_err(ErrWrongLeader);
@@ -280,8 +280,8 @@ void KvServer::PutAppend(const raftKVRpcProctoc::PutAppendArgs *args, raftKVRpcP
 
 void KvServer::ReadRaftApplyCommandLoop() {
   while (true) {
-    //如果只操作applyChan不用拿锁，因为applyChan自己带锁
-    auto message = applyChan->Pop();  //阻塞弹出
+    // 如果只操作applyChan不用拿锁，因为applyChan自己带锁
+    auto message = applyChan->Pop();  // 阻塞弹出
     DPrintf(
         "---------------tmp-------------[func-KvServer::ReadRaftApplyCommandLoop()-kvserver{%d}] 收到了下raft的消息",
         m_me);
@@ -401,7 +401,7 @@ KvServer::KvServer(int me, int maxraftstate, std::string nodeInforFileName, shor
   std::cout << "raftServer node:" << m_me << " start to sleep to wait all ohter raftnode start!!!!" << std::endl;
   sleep(6);
   std::cout << "raftServer node:" << m_me << " wake up!!!! start to connect other raftnode" << std::endl;
-  //获取所有raft节点ip、port ，并进行连接  ,要排除自己
+  // 获取所有raft节点ip、port ，并进行连接  ,要排除自己
   MprpcConfig config;
   config.LoadConfigFile(nodeInforFileName.c_str());
   std::vector<std::pair<std::string, short> > ipPortVt;
@@ -413,10 +413,10 @@ KvServer::KvServer(int me, int maxraftstate, std::string nodeInforFileName, shor
     if (nodeIp.empty()) {
       break;
     }
-    ipPortVt.emplace_back(nodeIp, atoi(nodePortStr.c_str()));  //沒有atos方法，可以考慮自己实现
+    ipPortVt.emplace_back(nodeIp, atoi(nodePortStr.c_str()));  // 沒有atos方法，可以考慮自己实现
   }
   std::vector<std::shared_ptr<RaftRpcUtil> > servers;
-  //进行连接
+  // 进行连接
   for (int i = 0; i < ipPortVt.size(); ++i) {
     if (i == m_me) {
       servers.push_back(nullptr);
@@ -429,7 +429,7 @@ KvServer::KvServer(int me, int maxraftstate, std::string nodeInforFileName, shor
 
     std::cout << "node" << m_me << " 连接node" << i << "success!" << std::endl;
   }
-  sleep(ipPortVt.size() - me);  //等待所有节点相互连接成功，再启动raft
+  sleep(ipPortVt.size() - me);  // 等待所有节点相互连接成功，再启动raft
   m_raftNode->init(servers, m_me, persister, applyChan);
   // kv的server直接与raft通信，但kv不直接与raft通信，所以需要把ApplyMsg的chan传递下去用于通信，两者的persist也是共用的
 
@@ -445,6 +445,6 @@ KvServer::KvServer(int me, int maxraftstate, std::string nodeInforFileName, shor
   if (!snapshot.empty()) {
     ReadSnapShotToInstall(snapshot);
   }
-  std::thread t2(&KvServer::ReadRaftApplyCommandLoop, this);  //马上向其他节点宣告自己就是leader
-  t2.join();  //由於ReadRaftApplyCommandLoop一直不會結束，达到一直卡在这的目的
+  std::thread t2(&KvServer::ReadRaftApplyCommandLoop, this);  // 马上向其他节点宣告自己就是leader
+  t2.join();  // 由於ReadRaftApplyCommandLoop一直不會結束，达到一直卡在这的目的
 }
