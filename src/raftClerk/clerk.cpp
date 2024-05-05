@@ -56,10 +56,10 @@ void Clerk::PutAppend(std::string key, std::string value, std::string op) {
       DPrintf("【Clerk::PutAppend】原以为的leader：{%d}请求失败，向新leader{%d}重试  ，操作：{%s}", server, server + 1,
               op.c_str());
       if (!ok) {
-        DPrintf("重试原因 ，rpc失敗 ，");
+        DPrintf("重试原因 ，rpc失败 ，");
       }
       if (reply.err() == ErrWrongLeader) {
-        DPrintf("重試原因：非leader");
+        DPrintf("重试原因：非leader");
       }
       server = (server + 1) % m_servers.size();  // try the next server
       continue;
@@ -74,6 +74,7 @@ void Clerk::PutAppend(std::string key, std::string value, std::string op) {
 void Clerk::Put(std::string key, std::string value) { PutAppend(key, value, "Put"); }
 
 void Clerk::Append(std::string key, std::string value) { PutAppend(key, value, "Append"); }
+
 //初始化客户端
 void Clerk::Init(std::string configFileName) {
   //获取所有raft节点ip、port ，并进行连接
@@ -82,13 +83,12 @@ void Clerk::Init(std::string configFileName) {
   std::vector<std::pair<std::string, short>> ipPortVt;
   for (int i = 0; i < INT_MAX - 1; ++i) {
     std::string node = "node" + std::to_string(i);
-
     std::string nodeIp = config.Load(node + "ip");
     std::string nodePortStr = config.Load(node + "port");
     if (nodeIp.empty()) {
       break;
     }
-    ipPortVt.emplace_back(nodeIp, atoi(nodePortStr.c_str()));  //沒有atos方法，可以考慮自己实现
+    ipPortVt.emplace_back(nodeIp, atoi(nodePortStr.c_str()));  //沒有atos方法，可以考虑自己实现
   }
   //进行连接
   for (const auto& item : ipPortVt) {

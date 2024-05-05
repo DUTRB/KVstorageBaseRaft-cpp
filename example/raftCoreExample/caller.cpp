@@ -1,6 +1,13 @@
-//
-// Created by swx on 23-6-4.
-//
+/*
+ * @Author: rubo
+ * @Date: 2024-05-03 10:58:16
+ * @LastEditors: HUAWEI-Ubuntu ruluy0205@163.com
+ * @LastEditTime: 2024-05-05 16:40:04
+ * @FilePath: /KVstorageBaseRaft-cpp/example/raftCoreExample/caller.cpp
+ * @Description: 
+ */
+
+// clerk（外部客户端）调用代码
 #include <iostream>
 #include "clerk.h"
 #include "util.h"
