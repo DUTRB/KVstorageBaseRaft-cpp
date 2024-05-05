@@ -62,7 +62,7 @@ class KvServer : raftKVRpcProctoc::kvServerRpc {
            raftKVRpcProctoc::GetReply
                *reply);  //将 GetArgs 改为rpc调用的，因为是远程客户端，即服务器宕机对客户端来说是无感的
   /**
-   * 從raft節點中獲取消息  （不要誤以爲是執行【GET】命令）
+   * 从raft节点中获取消息  （不要误以为是执行【GET】命令）
    * @param message
    */
   void GetCommandFromRaft(ApplyMsg message);
