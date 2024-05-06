@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "/home/void/Documents/Raft/KVstorageBaseRaft-cpp/bin/test_hook"
+			"path" : "/home/void/Documents/Raft/KVstorageBaseRaft-cpp/bin/test_server"
 		}
 	],
 	"backtrace" : 1,
@@ -28,7 +28,7 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 20,
+				"line" : 8,
 				"parent" : 0
 			},
 			{
@@ -37,14 +37,38 @@
 			{
 				"command" : 1,
 				"file" : 1,
-				"line" : 32,
+				"line" : 28,
 				"parent" : 2
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 21,
+				"line" : 9,
 				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 17,
+				"parent" : 2
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 18,
+				"parent" : 2
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 19,
+				"parent" : 2
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 20,
+				"parent" : 2
 			},
 			{
 				"command" : 3,
@@ -68,30 +92,6 @@
 				"command" : 3,
 				"file" : 1,
 				"line" : 24,
-				"parent" : 2
-			},
-			{
-				"command" : 3,
-				"file" : 1,
-				"line" : 25,
-				"parent" : 2
-			},
-			{
-				"command" : 3,
-				"file" : 1,
-				"line" : 26,
-				"parent" : 2
-			},
-			{
-				"command" : 3,
-				"file" : 1,
-				"line" : 27,
-				"parent" : 2
-			},
-			{
-				"command" : 3,
-				"file" : 1,
-				"line" : 28,
 				"parent" : 2
 			}
 		]
@@ -165,7 +165,7 @@
 			"id" : "fiber_lib::@d24e72df460051067778"
 		}
 	],
-	"id" : "test_hook::@064bc21e286d072af657",
+	"id" : "test_server::@064bc21e286d072af657",
 	"link" : 
 	{
 		"commandFragments" : 
@@ -209,8 +209,8 @@
 		],
 		"language" : "CXX"
 	},
-	"name" : "test_hook",
-	"nameOnDisk" : "test_hook",
+	"name" : "test_server",
+	"nameOnDisk" : "test_server",
 	"paths" : 
 	{
 		"build" : "example/fiberExample",
@@ -231,7 +231,7 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "example/fiberExample/test_hook.cpp",
+			"path" : "example/fiberExample/server.cpp",
 			"sourceGroupIndex" : 0
 		}
 	],

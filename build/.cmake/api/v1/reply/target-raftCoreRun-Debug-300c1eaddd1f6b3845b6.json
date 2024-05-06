@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "/home/void/Documents/Raft/KVstorageBaseRaft-cpp/bin/callerMain"
+			"path" : "/home/void/Documents/Raft/KVstorageBaseRaft-cpp/bin/raftCoreRun"
 		}
 	],
 	"backtrace" : 1,
@@ -28,7 +28,7 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 10,
+				"line" : 4,
 				"parent" : 0
 			},
 			{
@@ -37,14 +37,38 @@
 			{
 				"command" : 1,
 				"file" : 1,
-				"line" : 32,
+				"line" : 28,
 				"parent" : 2
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 11,
+				"line" : 5,
 				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 17,
+				"parent" : 2
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 18,
+				"parent" : 2
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 19,
+				"parent" : 2
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 20,
+				"parent" : 2
 			},
 			{
 				"command" : 3,
@@ -68,30 +92,6 @@
 				"command" : 3,
 				"file" : 1,
 				"line" : 24,
-				"parent" : 2
-			},
-			{
-				"command" : 3,
-				"file" : 1,
-				"line" : 25,
-				"parent" : 2
-			},
-			{
-				"command" : 3,
-				"file" : 1,
-				"line" : 26,
-				"parent" : 2
-			},
-			{
-				"command" : 3,
-				"file" : 1,
-				"line" : 27,
-				"parent" : 2
-			},
-			{
-				"command" : 3,
-				"file" : 1,
-				"line" : 28,
 				"parent" : 2
 			}
 		]
@@ -154,10 +154,7 @@
 			},
 			"sourceIndexes" : 
 			[
-				0,
-				1,
-				2,
-				3
+				0
 			]
 		}
 	],
@@ -166,9 +163,13 @@
 		{
 			"backtrace" : 4,
 			"id" : "skip_list_on_raft::@6890427a1f51a3e7e1df"
+		},
+		{
+			"backtrace" : 4,
+			"id" : "rpc_lib::@c0b061266edb2b3621b8"
 		}
 	],
-	"id" : "callerMain::@8bc4f59cdd6e66b7d757",
+	"id" : "raftCoreRun::@8bc4f59cdd6e66b7d757",
 	"link" : 
 	{
 		"commandFragments" : 
@@ -197,35 +198,42 @@
 			},
 			{
 				"backtrace" : 4,
+				"fragment" : "../../../lib/librpc_lib.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 4,
 				"fragment" : "-lprotobuf",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 4,
-				"fragment" : "-lboost_serialization",
-				"role" : "libraries"
-			},
-			{
 				"fragment" : "-lmuduo_net",
 				"role" : "libraries"
 			},
 			{
+				"backtrace" : 4,
 				"fragment" : "-lmuduo_base",
 				"role" : "libraries"
 			},
 			{
+				"backtrace" : 4,
 				"fragment" : "-lpthread",
 				"role" : "libraries"
 			},
 			{
 				"fragment" : "-ldl",
 				"role" : "libraries"
+			},
+			{
+				"fragment" : "-lboost_serialization",
+				"role" : "libraries"
 			}
 		],
 		"language" : "CXX"
 	},
-	"name" : "callerMain",
-	"nameOnDisk" : "callerMain",
+	"name" : "raftCoreRun",
+	"nameOnDisk" : "raftCoreRun",
 	"paths" : 
 	{
 		"build" : "example/raftCoreExample",
@@ -237,10 +245,7 @@
 			"name" : "Source Files",
 			"sourceIndexes" : 
 			[
-				0,
-				1,
-				2,
-				3
+				0
 			]
 		}
 	],
@@ -249,25 +254,7 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "src/raftClerk/clerk.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "src/raftClerk/raftServerRpcUtil.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "example/raftCoreExample/caller.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "src/common/util.cpp",
+			"path" : "example/raftCoreExample/raftKvDB.cpp",
 			"sourceGroupIndex" : 0
 		}
 	],
