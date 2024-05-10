@@ -1,6 +1,12 @@
-//
-// Created by swx on 23-12-28.
-//
+/*
+ * @Author: rubo
+ * @Date: 2024-05-03 10:58:16
+ * @LastEditors: HUAWEI-Ubuntu ruluy0205@163.com
+ * @LastEditTime: 2024-05-10 09:38:41
+ * @FilePath: /KVstorageBaseRaft-cpp/example/raftCoreExample/raftKvDB.cpp
+ * @Description:
+ */
+
 #include <iostream>
 #include "raft.h"
 // #include "kvServer.h"
@@ -12,7 +18,7 @@
 void ShowArgsHelp();
 
 int main(int argc, char **argv) {
-  //////////////////////////////////读取命令参数：节点数量、写入raft节点节点信息到哪个文件
+  // 读取命令参数：节点数量、写入raft节点节点信息到哪个文件
   if (argc < 2) {
     ShowArgsHelp();
     exit(EXIT_FAILURE);
@@ -49,7 +55,7 @@ int main(int argc, char **argv) {
   }
   for (int i = 0; i < nodeNum; i++) {
     short port = startPort + static_cast<short>(i);
-    std::cout << "start to create raftkv node:" << i << "    port:" << port << " pid:" << getpid() << std::endl;
+    std::cout << "Start to create raftkv node:" << i << "    port:" << port << " pid:" << getpid() << std::endl;
     pid_t pid = fork();  // 创建新进程
     if (pid == 0) {
       // 如果是子进程
