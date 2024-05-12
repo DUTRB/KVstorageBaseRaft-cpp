@@ -1,8 +1,13 @@
-//
-// Created by swx on 23-12-21.
-//
-#include <iostream>
+/*
+ * @Author: rubo
+ * @Date: 2024-05-10 14:35:55
+ * @LastEditors: HUAWEI-Ubuntu ruluy0205@163.com
+ * @LastEditTime: 2024-05-11 10:10:29
+ * @FilePath: /KVstorageBaseRaft-cpp/example/rpcExample/caller/callFriendService.cpp
+ * @Description:
+ */
 
+#include <iostream>
 // #include "mprpcapplication.h"
 #include "rpcExample/friend.pb.h"
 
@@ -16,19 +21,19 @@ int main(int argc, char **argv) {
   short port = 7788;
 
   // 演示调用远程发布的rpc方法Login
-  fixbug::FiendServiceRpc_Stub stub(
-      new MprpcChannel(ip, port, true));  //注册进自己写的channel类，channel类用于自定义发送格式和负责序列化等操作
+  // 注册进自己写的channel类，channel类用于自定义发送格式和负责序列化等操作
+  fixbug::FiendServiceRpc_Stub stub(new MprpcChannel(ip, port, true));
   // rpc方法的请求参数
   fixbug::GetFriendsListRequest request;
   request.set_userid(1000);
   // rpc方法的响应
   fixbug::GetFriendsListResponse response;
-  // 发起rpc方法的调用,消费这的stub最后都会调用到channel的 call_method方法  同步的rpc调用过程  MprpcChannel::callmethod
+  // 发起rpc方法的调用,消费者的stub最后都会调用到channel的 call_method方法  同步的rpc调用过程  MprpcChannel::callmethod
   MprpcController controller;
-  //長連接測試 ，發送10次請求
+  // 长连接测试 ，发送10次请求
   int count = 10;
   while (count--) {
-    std::cout << " 倒数" << count << "次发起RPC请求" << std::endl;
+    std::cout << " 倒数第 " << count << " 次发起 RPC 请求：" << std::endl;
     stub.GetFriendsList(&controller, &request, &response, nullptr);
     // RpcChannel->RpcChannel::callMethod 集中来做所有rpc方法调用的参数序列化和网络发送
 
@@ -39,15 +44,15 @@ int main(int argc, char **argv) {
       std::cout << controller.ErrorText() << std::endl;
     } else {
       if (0 == response.result().errcode()) {
-        std::cout << "rpc GetFriendsList response success!" << std::endl;
+        std::cout << "RPC GetFriendsList response success!" << std::endl;
         int size = response.friends_size();
         for (int i = 0; i < size; i++) {
           std::cout << "index:" << (i + 1) << " name:" << response.friends(i) << std::endl;
         }
       } else {
-        //这里不是rpc失败，
-        // 而是业务逻辑的返回值是失败
-        // 两者要区分清楚
+        // 这里不是rpc失败，
+        //  而是业务逻辑的返回值是失败
+        //  两者要区分清楚
         std::cout << "rpc GetFriendsList response error : " << response.result().errmsg() << std::endl;
       }
     }

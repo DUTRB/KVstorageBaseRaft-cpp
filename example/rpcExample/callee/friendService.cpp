@@ -1,11 +1,16 @@
-//
-// Created by swx on 23-12-21.
-//
+/*
+ * @Author: rubo
+ * @Date: 2024-05-10 14:35:55
+ * @LastEditors: HUAWEI-Ubuntu ruluy0205@163.com
+ * @LastEditTime: 2024-05-11 10:31:06
+ * @FilePath: /KVstorageBaseRaft-cpp/example/rpcExample/callee/friendService.cpp
+ * @Description: 
+ */
+
 #include <mprpcchannel.h>
 #include <iostream>
 #include <string>
 #include "rpcExample/friend.pb.h"
-
 #include <vector>
 #include "rpcprovider.h"
 
@@ -14,9 +19,9 @@ class FriendService : public fixbug::FiendServiceRpc {
   std::vector<std::string> GetFriendsList(uint32_t userid) {
     std::cout << "local do GetFriendsList service! userid:" << userid << std::endl;
     std::vector<std::string> vec;
-    vec.push_back("gao yang");
-    vec.push_back("liu hong");
-    vec.push_back("wang shuo");
+    vec.push_back("testNum01");
+    vec.push_back("testNum02");
+    vec.push_back("testNum03");
     return vec;
   }
 

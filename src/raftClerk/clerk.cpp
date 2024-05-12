@@ -39,7 +39,7 @@ std::string Clerk::Get(std::string key) {
 }
 
 void Clerk::PutAppend(std::string key, std::string value, std::string op) {
-  // You will have to modify this function.
+  
   m_requestId++;
   auto requestId = m_requestId;
   auto server = m_recentLeaderId;
@@ -53,10 +53,10 @@ void Clerk::PutAppend(std::string key, std::string value, std::string op) {
     raftKVRpcProctoc::PutAppendReply reply;
     bool ok = m_servers[server]->PutAppend(&args, &reply);
     if (!ok || reply.err() == ErrWrongLeader) {
-      DPrintf("【Clerk::PutAppend】原以为的leader：{%d}请求失败，向新leader{%d}重试  ，操作：{%s}", server, server + 1,
-              op.c_str());
+      DPrintf("【Clerk::PutAppend】原以为的leader：{%d}请求失败，向新leader{%d}重试，操作：{%s}", 
+                server, server + 1, op.c_str());
       if (!ok) {
-        DPrintf("重试原因 ，rpc失败 ，");
+        DPrintf("重试原因：rpc失败");
       }
       if (reply.err() == ErrWrongLeader) {
         DPrintf("重试原因：非leader");
